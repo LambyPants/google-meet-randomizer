@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Google Meet Participant Sort</title>
+    <script src="popup.js"></script>
+  </head>
+  <style>
+    body {
+      width: 400px;
+      height: 400px;
+    }
+    h1 {
+      text-align: center;
+      font-size: 14px;
+    }
+    .container {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      align-items: center;
+      height: calc(100% - 2rem);
+      width: calc(100% - 2rem);
+      padding: 1rem;
+    }
+    ul {
+      list-style: none;
+      margin: 0;
+      height: calc(100% - 2rem);
+      width: calc(100% - 2rem);
+      padding: 1rem;
+    }
+    li.starter {
+      font-style: italic;
+    }
+  </style>
+  <body>
+    <div class="container">
+      <h1>Google Meet Participant Sort</h1>
+      <ul id="list">
+        <li class="starter">This extension only works on meet.google.com</li>
+      </ul>
+      <div class="buttons">
+        <button id="copy">Copy</button>
+        <button id="checkPage">Randomize</button>
+      </div>
+    </div>
+  </body>
+</html>
