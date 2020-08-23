@@ -1,73 +1,13 @@
-function refreshList(response) {
-  const list = document.getElementById('list');
-  const hasData = Boolean(response && response.data.length);
-  const data = (hasData
-    ? response.data
-    : ['No results found - please try again']
-  )
-    .map(function (name, index) {
-      return `<li>${index + 1}. ${name}</li>`;
-    })
-    .join('');
-  list.innerHTML = data;
-  chrome.storage.sync.set({ prevList: response });
-}
+import {
+  refreshList,
+  resetDOM,
+  resyncList,
+  applyStarter,
+  copyTextToClipboard,
+  enableAllButtons,
+  disableButtons,
+} from './helpers/popup';
 
-function resyncList(response) {
-  chrome.storage.sync.get(['prevList'], function ({ prevList }) {
-    if (prevList && prevList.data && response && response.data) {
-      const obj = {};
-      const arr = [];
-      response.data.forEach((name) => {
-        const index = prevList.data.findIndex((oName, i) => {
-          return oName === name && !obj[i];
-        });
-        if (index >= 0) {
-          obj[index] = name;
-        } else {
-          arr.push(name);
-        }
-      });
-      const resyncedArr = Object.keys(obj)
-        .map((key) => obj[key])
-        .concat(arr);
-      refreshList({ data: resyncedArr });
-    } else {
-      refreshList({ data: [] });
-    }
-  });
-}
-
-function applyStarter(text) {
-  const list = document.getElementById('list');
-  list.innerHTML = `<li class="starter">${text}</li>`;
-}
-
-function copyTextToClipboard(text) {
-  const copyFrom = document.createElement('textarea');
-
-  copyFrom.textContent = text;
-
-  document.body.appendChild(copyFrom);
-
-  copyFrom.select();
-
-  document.execCommand('copy');
-  copyFrom.blur();
-  document.body.removeChild(copyFrom);
-}
-
-function resetDOM() {
-  chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
-    chrome.tabs.sendMessage(tabs[0].id, { action: 'reset' });
-  });
-}
-
-function enableAllButtons(check, copy, resync) {
-  check.classList.remove('disabled');
-  copy.classList.remove('disabled');
-  resync.classList.remove('disabled');
-}
 document.addEventListener(
   'DOMContentLoaded',
   function () {
@@ -96,15 +36,12 @@ document.addEventListener(
               prevList: [],
               prevId: curId,
             });
-            resyncButton.classList.add('disabled');
-            copyButton.classList.add('disabled');
+            disableButtons(resyncButton, copyButton);
             applyStarter('No previous results found');
           }
         });
       } else {
-        resyncButton.classList.add('disabled');
-        copyButton.classList.add('disabled');
-        checkPageButton.classList.add('disabled');
+        disableButtons(resyncButton, copyButton, checkPageButton);
         applyStarter('This extension only works on google.meet.com');
       }
     });
