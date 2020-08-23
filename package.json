@@ -4,8 +4,20 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "minify": "html-minifier --input-dir ./dist --output-dir ./dist --collapse-whitespace --file-ext $EXT",
+    "build": "rollup -c && EXT=css npm run minify && EXT=html npm run minify",
+    "watch": "rollup -c -w",
+    "test": "echo \"Tests coming soon\" && exit 1"
   },
   "author": "",
-  "license": "ISC"
+  "license": "ISC",
+  "devDependencies": {
+    "@rollup/plugin-commonjs": "^15.0.0",
+    "@rollup/plugin-node-resolve": "^9.0.0",
+    "html-minifier": "^4.0.0",
+    "minify": "^5.1.1",
+    "rollup": "^2.26.5",
+    "rollup-plugin-chrome-extension": "^3.3.0",
+    "rollup-plugin-terser": "^7.0.0"
+  }
 }
