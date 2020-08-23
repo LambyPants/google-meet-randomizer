@@ -5,43 +5,115 @@
     <script src="popup.js"></script>
   </head>
   <style>
+    html {
+      background: #fff;
+      border: 1px solid #ccc;
+      font-family: 'Roboto';
+      -webkit-box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+      border-color: rgba(0, 0, 0, 0.2);
+    }
     body {
       width: 400px;
       height: 400px;
+      background: #fff;
+      color: #000;
+    }
+    .header {
+      flex-basis: 5%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      width: 100%;
+      height: 100%;
+      padding: 1rem;
     }
     h1 {
-      text-align: center;
-      font-size: 14px;
+      margin: 0;
+      font-size: 16px;
     }
     .container {
       display: flex;
       flex-direction: column;
       justify-content: space-between;
       align-items: center;
-      height: calc(100% - 2rem);
+      height: calc(100%);
       width: calc(100% - 2rem);
-      padding: 1rem;
+      padding: 0 1rem;
     }
     ul {
+      overflow-y: auto;
+      border-top: 1px solid #e8eaed;
+      border-bottom: 1px solid #e8eaed;
       list-style: none;
       margin: 0;
       height: calc(100% - 2rem);
       width: calc(100% - 2rem);
       padding: 1rem;
+      flex-basis: 90%;
     }
     li.starter {
       font-style: italic;
+      height: 100%;
+      width: 100%;
+      text-align: center;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+    .buttons {
+      flex-basis: 5%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      height: calc(100% - 4rem);
+      width: calc(100% - 4rem);
+      padding: 1rem;
+    }
+
+    button {
+      flex: 1;
+      background-color: #217dbb;
+      color: #fff;
+      font-size: 14px;
+      padding: 8px 24px;
+      text-decoration: none;
+      border-color: #204d74;
+      border: none;
+      border-radius: 2px;
+      background-clip: padding-box;
+      margin: 4px;
+      cursor: pointer;
+    }
+    #checkPage {
+      background-color: #ec971f;
+      border-color: #d58512;
+    }
+    #resync {
+      background-color: #5cb85c;
+      border-color: #4cae4c;
+    }
+    .disabled {
+      color: #fff;
+      background-color: #6c757d;
+      border-color: #6c757d;
+      cursor: default;
+      pointer-events: none;
     }
   </style>
   <body>
     <div class="container">
-      <h1>Google Meet Participant Sort</h1>
+      <div class="header">
+        <h1>Google Meet Participant Randomizer</h1>
+      </div>
       <ul id="list">
-        <li class="starter">This extension only works on meet.google.com</li>
+        <li class="starter"></li>
       </ul>
       <div class="buttons">
         <button id="copy">Copy</button>
         <button id="checkPage">Randomize</button>
+        <button id="resync">Resync</button>
       </div>
     </div>
   </body>

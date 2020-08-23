@@ -1,10 +1,11 @@
+let parentController;
+
 function randomizeGMeetParticipants() {
   const arr = [];
-  document
-    .querySelectorAll(`*[data-sort-key]`)
-    .forEach((node) =>
-      arr.push(node.getAttribute('data-sort-key').split(' spaces')[0]),
-    );
+  document.querySelectorAll(`*[data-sort-key]`).forEach((node) => {
+    if (!node.innerText.startsWith('Presentation'))
+      arr.push(node.getAttribute('data-sort-key').split(' spaces/')[0]);
+  });
 
   function shuffle(array) {
     let currentIndex = array.length,
@@ -28,20 +29,43 @@ function randomizeGMeetParticipants() {
   return shuffledArray;
 }
 
-chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
-  if (request.action === 'sort') {
-    const arr = randomizeGMeetParticipants();
-    if (!arr.length) {
-      const chat = document.querySelector('*[data-tooltip~="everyone"]');
-      if (chat) {
-        chat.click();
-        sendResponse({ data: [], retry: true });
+async function grossHackToLoadAllParticipants() {
+  return new Promise((resolve, reject) => {
+    setTimeout(() => {
+      //TODO: replace this function - there has to be a better way to do this
+      // if you have a suggestion feel free to open a PR
+      let firstKey = document.querySelector('*[data-sort-key]');
+
+      while (firstKey && !parentController) {
+        if (firstKey.hasAttribute('data-is-persistent')) {
+          parentController = firstKey;
+        }
+        firstKey = firstKey.parentElement;
       }
-    } else {
-      sendResponse({ data: arr });
-    }
+      if (parentController) {
+        parentController.style.height = '10000vh';
+        window.dispatchEvent(new CustomEvent('resize'));
+        setTimeout(() => {
+          resolve(parentController);
+        }, 500);
+      } else {
+        resolve(false);
+      }
+    }, 500);
+  });
+}
+
+chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
+  if (request.action === 'sort' || request.action === 'resync') {
+    (async () => {
+      const chat = document.querySelector('*[data-tooltip~="everyone"]');
+      chat.click();
+      await grossHackToLoadAllParticipants();
+      sendResponse({ data: randomizeGMeetParticipants() });
+    })();
+    return true; // keep the messaging channel open for sendResponse
   }
-  if (request.action === 'retry') {
-    sendResponse({ data: randomizeGMeetParticipants() });
+  if (request.action === 'reset' && parentController) {
+    parentController.style.height = '';
   }
 });
