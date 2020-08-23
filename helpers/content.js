@@ -30,12 +30,7 @@ export function randomizeGMeetParticipants() {
     return array;
   }
 
-  const shuffledArray = shuffle([
-    'Rick Sanchez',
-    'Birdperson',
-    'Jerry Smith',
-    'Mr. Meeseeks',
-  ]);
+  const shuffledArray = shuffle(arr);
   return shuffledArray;
 }
 

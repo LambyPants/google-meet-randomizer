@@ -1,6 +1,6 @@
 {
   "manifest_version": 2,
-  "name": "Google Participant Randomizer",
+  "name": "Google Meet Randomizer",
   "description": "Randomly sorts Google Meet participants into a list which can be easily copied to your clipboard",
   "version": "0.0.1",
   "browser_action": {

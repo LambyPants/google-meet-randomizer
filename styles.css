@@ -51,8 +51,8 @@ li {
 }
 li.starter {
   font-style: italic;
-  height: 100%;
-  width: 100%;
+  height: calc(100% - 24px);
+  width: calc(100% - 40px);
   text-align: center;
   display: flex;
   justify-content: center;
@@ -83,7 +83,8 @@ button {
   cursor: pointer;
   transition: background-color 0.3s ease;
 }
-#checkPage {
+
+#copy {
   background-color: #ec971f;
   border-color: #d58512;
 }

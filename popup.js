@@ -10,7 +10,7 @@ import {
 
 document.addEventListener(
   'DOMContentLoaded',
-  function () {
+  function() {
     const checkPageButton = document.getElementById('checkPage');
     const copyButton = document.getElementById('copy');
     const resyncButton = document.getElementById('resync');
@@ -19,7 +19,7 @@ document.addEventListener(
       const curId = url.split('?')[0];
       const isMeet = /\meet\.google\.com/.test(url);
       if (isMeet) {
-        chrome.storage.sync.get(['prevList', 'prevId'], function ({
+        chrome.storage.sync.get(['prevList', 'prevId'], function({
           prevList,
           prevId,
         }) {
@@ -37,7 +37,9 @@ document.addEventListener(
               prevId: curId,
             });
             disableButtons(resyncButton, copyButton);
-            applyStarter('No previous results found');
+            applyStarter(
+              'No previous results found. Click the randomize button to generate a new list.',
+            );
           }
         });
       } else {
@@ -48,12 +50,12 @@ document.addEventListener(
 
     checkPageButton.addEventListener(
       'click',
-      function () {
-        chrome.tabs.query({ active: true, currentWindow: true }, function (
+      function() {
+        chrome.tabs.query({ active: true, currentWindow: true }, function(
           tabs,
         ) {
           applyStarter('Randomzing participants...');
-          chrome.tabs.sendMessage(tabs[0].id, { action: 'sort' }, function (
+          chrome.tabs.sendMessage(tabs[0].id, { action: 'sort' }, function(
             response,
           ) {
             if (response) {
@@ -70,13 +72,12 @@ document.addEventListener(
     );
     resyncButton.addEventListener(
       'click',
-      function () {
-        chrome.tabs.query({ active: true, currentWindow: true }, function (
+      function() {
+        chrome.tabs.query({ active: true, currentWindow: true }, function(
           tabs,
         ) {
-          console.log('go!');
           applyStarter('Checking to see if anyone left or joined...');
-          chrome.tabs.sendMessage(tabs[0].id, { action: 'resync' }, function (
+          chrome.tabs.sendMessage(tabs[0].id, { action: 'resync' }, function(
             response,
           ) {
             if (response) {
@@ -90,7 +91,7 @@ document.addEventListener(
     );
     copyButton.addEventListener(
       'click',
-      function () {
+      function() {
         const list = document.getElementById('list');
         copyTextToClipboard(list.innerText);
         window.close();
