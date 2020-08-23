@@ -54,7 +54,7 @@ document.addEventListener(
         chrome.tabs.query({ active: true, currentWindow: true }, function(
           tabs,
         ) {
-          applyStarter('Randomzing participants...');
+          applyStarter('Randomizing participants...');
           chrome.tabs.sendMessage(tabs[0].id, { action: 'sort' }, function(
             response,
           ) {
