@@ -15,7 +15,7 @@ export function refreshList(response) {
     })
     .join('');
   list.innerHTML = data;
-  chrome.storage.sync.set({ prevList: response });
+  if (hasData) chrome.storage.sync.set({ prevList: response });
 }
 
 /**

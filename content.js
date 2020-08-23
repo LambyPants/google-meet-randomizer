@@ -8,9 +8,13 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
   if (request.action === 'sort' || request.action === 'resync') {
     (async () => {
       const chat = document.querySelector('*[data-tooltip~="everyone"]');
-      chat.click();
-      await grossHackToLoadAllParticipants();
-      sendResponse({ data: randomizeGMeetParticipants() });
+      if (chat) {
+        chat.click();
+        await grossHackToLoadAllParticipants();
+        sendResponse({ data: randomizeGMeetParticipants() });
+      } else {
+        sendResponse({ data: [] });
+      }
     })();
     return true; // keep the messaging channel open for sendResponse
   }

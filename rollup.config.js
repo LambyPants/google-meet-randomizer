@@ -1,6 +1,7 @@
 import resolve from '@rollup/plugin-node-resolve';
 import commonjs from '@rollup/plugin-commonjs';
 import { terser } from 'rollup-plugin-terser';
+import zip from 'rollup-plugin-zip';
 
 import {
   chromeExtension,
@@ -19,5 +20,6 @@ export default {
     resolve(),
     commonjs(),
     terser(),
+    zip(),
   ],
 };
