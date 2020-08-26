@@ -65,7 +65,7 @@ export async function grossHackToLoadAllParticipants() {
       } else {
         resolve(false);
       }
-    }, 500);
+    }, 600);
   });
 }
 
