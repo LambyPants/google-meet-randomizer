@@ -1,5 +1,7 @@
 # Google Meet Randomizer
 
+[Download the extension](https://chrome.google.com/webstore/detail/google-meet-randomizer/lamfcglihfmokpfelfkepmhlggnkeppn?hl=en&authuser=2)
+
 ![Demo of Google Meet Randomizer](http://g.recordit.co/F7eFUqvBv8.gif)
 
 A simple Chrome extension which generates a randomized list of participants on a Google Meet call. I built this to make our large group meetings easier, as it's often difficult to determine who has already given their update or who should be next. This extension can also be used to take attendance or randomly select participants.
