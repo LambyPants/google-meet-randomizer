@@ -7,9 +7,9 @@ let parentController;
  */
 export function randomizeGMeetParticipants() {
   const arr = [];
-  document.querySelectorAll(`*[data-sort-key]`).forEach((node) => {
+  document.querySelectorAll(`*[data-participant-id]`).forEach((node) => {
     if (!node.innerText.startsWith('Presentation'))
-      arr.push(node.getAttribute('data-sort-key').split(' spaces/')[0]);
+      arr.push(node.innerText.split('\n')[0]);
   });
 
   function shuffle(array) {
@@ -46,7 +46,7 @@ export async function grossHackToLoadAllParticipants() {
     setTimeout(() => {
       //TODO: replace this function - there has to be a better way to do this
       // if you have a suggestion feel free to open a PR
-      let firstKey = document.querySelector('*[data-sort-key]');
+      let firstKey = document.querySelector('*[data-participant-id]');
 
       while (firstKey && !parentController) {
         if (firstKey.hasAttribute('data-is-persistent')) {
