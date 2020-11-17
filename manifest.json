@@ -2,7 +2,7 @@
   "manifest_version": 2,
   "name": "Google Meet Randomizer",
   "description": "Randomly sorts Google Meet participants into a list which can be easily copied to your clipboard",
-  "version": "0.0.2",
+  "version": "2.0.0",
   "browser_action": {
     "default_icon": "icon.png",
     "default_popup": "popup.html"
@@ -13,5 +13,6 @@
       "matches": ["https://meet.google.com/*"],
       "js": ["content.js"]
     }
-  ]
+  ],
+  "icons": { "128": "large-icon.png", "48": "icon.png" }
 }
