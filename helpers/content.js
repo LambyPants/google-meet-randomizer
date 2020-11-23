@@ -7,10 +7,12 @@ let parentController;
  */
 export function randomizeGMeetParticipants() {
   const arr = [];
-  document.querySelectorAll(`*[data-participant-id]`).forEach((node) => {
-    if (!node.innerText.startsWith('Presentation'))
-      arr.push(node.innerText.split('\n')[0]);
-  });
+  document
+    .querySelectorAll(`div[role="list"] *[data-participant-id]`)
+    .forEach((node) => {
+      if (!node.innerText.startsWith('Presentation'))
+        arr.push(node.innerText.split('\n')[0]);
+    });
 
   function shuffle(array) {
     let currentIndex = array.length,
