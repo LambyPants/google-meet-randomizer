@@ -14,14 +14,16 @@ document.addEventListener(
     const checkPageButton = document.getElementById('checkPage');
     const copyButton = document.getElementById('copy');
     const resyncButton = document.getElementById('resync');
+    const autopostCheckbox = document.getElementById('autopost');
     chrome.tabs.query({ active: true, lastFocusedWindow: true }, (tabs) => {
       const url = tabs[0].url;
       const curId = url.split('?')[0];
       const isMeet = /\meet\.google\.com/.test(url);
       if (isMeet) {
-        chrome.storage.sync.get(['prevList', 'prevId'], function({
+        chrome.storage.sync.get(['prevList', 'prevId', 'autopost'], function({
           prevList,
           prevId,
+          autopost,
         }) {
           if (
             prevList &&
@@ -41,6 +43,9 @@ document.addEventListener(
               'No previous results found. Click the randomize button to generate a new list.',
             );
           }
+          if (autopost) {
+            autopostCheckbox.setAttribute('checked', '');
+          }
         });
       } else {
         disableButtons(resyncButton, copyButton, checkPageButton);
@@ -59,7 +64,7 @@ document.addEventListener(
             response,
           ) {
             if (response) {
-              refreshList(response);
+              refreshList(response, autopostCheckbox.checked);
               resetDOM();
               if (response.data && response.data.length) {
                 enableAllButtons(checkPageButton, copyButton, resyncButton);
@@ -81,7 +86,7 @@ document.addEventListener(
             response,
           ) {
             if (response) {
-              resyncList(response);
+              resyncList(response, autopostCheckbox.checked);
               resetDOM();
             }
           });
@@ -98,6 +103,12 @@ document.addEventListener(
       },
       false,
     );
+    autopostCheckbox.addEventListener('change', function(e) {
+      const shouldAutopost = e.currentTarget.checked;
+      chrome.storage.sync.set({
+        autopost: shouldAutopost,
+      });
+    });
 
     window.addEventListener(
       'beforeunload',
