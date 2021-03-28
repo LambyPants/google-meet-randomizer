@@ -3,7 +3,7 @@
  * @param {object} response
  * @returns {void}
  */
-export function refreshList(response) {
+export function refreshList(response, autopost = false) {
   const list = document.getElementById('list');
   const hasData = Boolean(response && response.data.length);
   const data = (hasData
@@ -15,7 +15,12 @@ export function refreshList(response) {
     })
     .join('');
   list.innerHTML = data;
-  if (hasData) chrome.storage.sync.set({ prevList: response });
+  if (hasData) {
+    chrome.storage.sync.set({ prevList: response });
+    if (autopost) {
+      autopostToChat(list.innerText);
+    }
+  }
 }
 
 /**
@@ -24,7 +29,7 @@ export function refreshList(response) {
  * @fires refreshList
  * @returns {void}
  */
-export function resyncList(response) {
+export function resyncList(response, autopost) {
   chrome.storage.sync.get(['prevList'], function({ prevList }) {
     if (prevList && prevList.data && response && response.data) {
       const obj = {};
@@ -42,7 +47,7 @@ export function resyncList(response) {
       const resyncedArr = Object.keys(obj)
         .map((key) => obj[key])
         .concat(arr);
-      refreshList({ data: resyncedArr });
+      refreshList({ data: resyncedArr }, autopost);
     } else {
       refreshList({ data: [] });
     }
@@ -82,6 +87,17 @@ export function copyTextToClipboard(text) {
 export function resetDOM() {
   chrome.tabs.query({ active: true, currentWindow: true }, function(tabs) {
     chrome.tabs.sendMessage(tabs[0].id, { action: 'reset' });
+  });
+}
+
+/**
+ * Autoposts to chat window
+ * @emits chrome.tabs.sendMessage
+ * @returns {void}
+ */
+export function autopostToChat(data) {
+  chrome.tabs.query({ active: true, currentWindow: true }, function(tabs) {
+    chrome.tabs.sendMessage(tabs[0].id, { action: 'autopost', data });
   });
 }
 
