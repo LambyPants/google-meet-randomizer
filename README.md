@@ -11,10 +11,13 @@ It includes 3 commands:
 - Copy (copies the list of names to the clipboard)
 - Randomize (generates a randomly sorted list of names)
 - Resync (keeps the list order the same, but adds / removes guests who have joined or left)
+- Autopost to chat (when enabled it automatically posts the list of names to the chat window)
 
 ## Disclaimer
 
 Google does not offer an API for Google Meet, so this extension makes many assumptions about the Google Meet UI. It will probably break when Google updates their interface. Open a PR or create an issue should you experience any issues.
+
+Edit 2021 - as predicted, this extension broke a few times as Google updated their interface. Just shoot me an email or open an issue if you experience any problems.
 
 ## Contributing
 
