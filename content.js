@@ -7,7 +7,9 @@ import {
 chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
   if (request.action === 'sort' || request.action === 'resync') {
     (async () => {
-      const chat = document.querySelector('*[data-tooltip~="everyone"]');
+      const chat =
+        document.querySelector('*[data-tooltip~="everyone"]') ||
+        document.querySelector('*[aria-label~="everyone"]');
       if (chat) {
         chat.click();
         await grossHackToLoadAllParticipants();
@@ -23,9 +25,13 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
   }
   if (request.action === 'autopost') {
     // when the autopost checkbox is checked, post to chat
-    const everyoneChat = document.querySelector('*[data-tooltip~="Chat"]');
+    const everyoneChat =
+      document.querySelector('*[data-tooltip~="Chat"]') ||
+      document.querySelector('*[aria-label~="Chat"]');
     if (everyoneChat) {
-      everyoneChat.click();
+      if (everyoneChat.getAttribute('aria-pressed') !== 'true') {
+        everyoneChat.click();
+      }
       setTimeout(() => {
         const textArea = document.querySelector('textarea');
         const send = document.querySelector('*[data-tooltip~="Send"]');
@@ -36,7 +42,7 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
           send.removeAttribute('aria-disabled');
           send.click();
         }
-      });
+      }, 300);
     }
   }
 });

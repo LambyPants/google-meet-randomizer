@@ -8,10 +8,11 @@ export function refreshList(response, autopost = false) {
   const hasData = Boolean(response && response.data.length);
   const data = (hasData
     ? response.data
-    : ['No results found - please try again']
+    : ['No results found - contact appsbylamby@gmail.com if issue persists.']
   )
     .map(function(name, index) {
-      return `<li>${index + 1}. ${name}</li>`;
+      const normalizedName = name.split('(You)');
+      return `<li>${index + 1}. ${normalizedName[0]}</li>`;
     })
     .join('');
   list.innerHTML = data;
