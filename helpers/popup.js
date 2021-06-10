@@ -11,8 +11,7 @@ export function refreshList(response, autopost = false) {
     : ['No results found - contact appsbylamby@gmail.com if issue persists.']
   )
     .map(function(name, index) {
-      const normalizedName = name.split('(You)');
-      return `<li>${index + 1}. ${normalizedName[0]}</li>`;
+      return `<li>${index + 1}. ${name}</li>`;
     })
     .join('');
   list.innerHTML = data;

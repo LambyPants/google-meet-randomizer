@@ -10,8 +10,11 @@ export function randomizeGMeetParticipants() {
   document
     .querySelectorAll(`div[role="list"] *[data-participant-id]`)
     .forEach((node) => {
-      if (!node.innerText.startsWith('Presentation'))
-        arr.push(node.innerText.split('\n')[0]);
+      if (!node.innerText.startsWith('Presentation')) {
+        const text = node.innerText.split('\n')[0];
+        const normalizedName = text.split('(You)');
+        arr.push(normalizedName[0]);
+      }
     });
 
   function shuffle(array) {
