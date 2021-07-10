@@ -34,7 +34,8 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
       }
       setTimeout(() => {
         const textArea = document.querySelector('textarea');
-        const send = document.querySelector('*[data-tooltip~="Send"]');
+        const send = document.querySelector('button[aria-label~="Send"]');
+        console.log('send: ', send);
 
         if (textArea && send) {
           textArea.value = request.data;
