@@ -1,6 +1,6 @@
 {
   "name": "google-meet-randomizer",
-  "version": "2.2.1",
+  "version": "2.2.2",
   "description": "Randomly sorts Google Meet participants into a list which can be easily copied to your clipboard",
   "main": "index.js",
   "scripts": {
