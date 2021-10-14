@@ -49,7 +49,7 @@ document.addEventListener(
         });
       } else {
         disableButtons(resyncButton, copyButton, checkPageButton);
-        applyStarter('This extension only works on google.meet.com');
+        applyStarter('This extension only works on meet.google.com');
       }
     });
 
