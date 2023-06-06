@@ -10,7 +10,7 @@ export function randomizeGMeetParticipants() {
   document
     .querySelectorAll(`div[role="list"] *[data-participant-id]`)
     .forEach((node) => {
-      if (!node.innerText.startsWith('Presentation')) {
+      if (!node.innerText.toLowerCase().includes('presentation')) {
         const text = node.innerText.split('\n')[0];
         const normalizedName = text.split('(You)');
         arr.push(normalizedName[0]);
