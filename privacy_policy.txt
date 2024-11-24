@@ -1,0 +1,1 @@
+This Chrome extension does not collect any personal information from users. It only accesses the necessary data on the current webpage to perform its intended function, such as saving the data to the clipboard, and does not store or transmit any identifiable user data. No data is shared with third parties.
