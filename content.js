@@ -9,7 +9,8 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
     (async () => {
       const chat =
         document.querySelector('*[data-tooltip~="everyone"]') ||
-        document.querySelector('button[data-panel-id="1"]');
+        document.querySelector('button[data-panel-id="1"]') ||
+        document.querySelector("*[data-avatar-count]"); // 2026 update
       if (chat) {
         chat.click();
         await grossHackToLoadAllParticipants();
